@@ -5,7 +5,8 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript">//<![CDATA[
     $(function () {
-        $('#connect_websocket').click(function () {
+        //$('#connect_websocket').click(function () {
+        window.onload = function () {
             if(window.s){
                 window.s.close()
             }
@@ -18,7 +19,7 @@
                 $('#messagecontainer').prepend('<p>' + e.data + '</p>');
             };
             window.s = s;
-        });
+        };
         $('#send_message').click(function () {
             if(!window.s){
                 alert("Please connect server.");
@@ -32,13 +33,38 @@
             }
         });
 
+        $('#start').click(function () {
+            $.ajax({
+                method: 'GET',
+                data: '',
+                url: '/start',
+                success: function(msg) {
+                    $('#messagecontainer').prepend('<p>' + '进程启动成功' + '</p>');
+                }
+            })
+        });
+
+        $('#test_start').click(function() {
+            $.ajax({
+                method: 'GET',
+                data: '',
+                url: '/action',
+                success: function(msg) {
+
+                }
+            })
+        })
     });
     //]]></script>
 </head>
 <body>
 <br>
 <input type="text" id="message" value="Hello, World!" />
+<!--
 <button type="button" id="connect_websocket">Connect websocket</button>
+-->
+<button type="button" id="start">启动进程</button>
+<button type="button" id="test_start">测试数据传输</button>
 <button type="button" id="send_message">Send message</button>
 <button type="button" id="close_websocket">Close websocket</button>
 <h1>Received Messages</h1>
