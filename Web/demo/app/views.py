@@ -14,6 +14,10 @@ def start(request):
     my_worker.start()
     return HttpResponse('ok')
 
+def stop(request):
+    my_worker.stop()
+    return HttpResponse('ok')
+
 def action(request):
     data_dict = {
         'command': 'get_plane_number',

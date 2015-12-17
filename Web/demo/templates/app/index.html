@@ -1,75 +1,67 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>django-websocket</title>
+    <title>UAV-Control</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css " %}">
+    <link rel="stylesheet" href="{% static "css/style.css " %}">
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript">//<![CDATA[
-    $(function () {
-        //$('#connect_websocket').click(function () {
-        window.onload = function () {
-            if(window.s){
-                window.s.close()
-            }
-            var s = new WebSocket("ws://" + window.location.host + "/echo");
-            s.onopen = function () {
-                console.log('WebSocket open');
-            };
-            s.onmessage = function (e) {
-                console.log('message: ' + e.data);
-                $('#messagecontainer').prepend('<p>' + e.data + '</p>');
-            };
-            window.s = s;
-        };
-        $('#send_message').click(function () {
-            if(!window.s){
-                alert("Please connect server.");
-            }else{
-                window.s.send($('#message').val());
-            }
-        });
-        $('#close_websocket').click(function () {
-            if(window.s){
-                window.s.close();
-            }
-        });
-
-        $('#start').click(function () {
-            $.ajax({
-                method: 'GET',
-                data: '',
-                url: '/start',
-                success: function(msg) {
-                    $('#messagecontainer').prepend('<p>' + '进程启动成功' + '</p>');
-                }
-            })
-        });
-
-        $('#test_start').click(function() {
-            $.ajax({
-                method: 'GET',
-                data: '',
-                url: '/action',
-                success: function(msg) {
-
-                }
-            })
-        })
-    });
-    //]]></script>
+    <!-- start amaps -->
+    <link rel="stylesheet" href="{% static "css/amaps.css" %}">
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.3&key=8ef1ddfea330aa3124a11f4aeaac187e"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <!-- end amaps -->
 </head>
-<body>
-<br>
-<input type="text" id="message" value="Hello, World!" />
-<!--
-<button type="button" id="connect_websocket">Connect websocket</button>
--->
-<button type="button" id="start">启动进程</button>
-<button type="button" id="test_start">测试数据传输</button>
-<button type="button" id="send_message">Send message</button>
-<button type="button" id="close_websocket">Close websocket</button>
-<h1>Received Messages</h1>
-<div id="messagecontainer">
 
-</div>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">UAV-Control</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+                <ul class="nav navbar-nav right">
+                    <li class="active"><a href="#">首页</a></li>
+                    <li><a href="#" id="test_websocket">测试WebSocket连接</a></li>
+                    <li><a href="#" id="start_progress">启动进程</a></li>
+                    <li><a href="#" id="test_progress">测试进程连接</a></li>
+                    <li><a href="#" id="stop_progress">关闭进程</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="col-md-10 amaps">
+                <div id="container"></div>
+                <div class="button-group">
+                    <input id="setFitView" class="button" type="button" value="地图自适应显示" />
+                </div>
+                <div class="info-tip">
+                    <div id="centerCoord"></div>
+                    <div id="tips"></div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <h1>Log</h1>
+                <div id="messagecontainer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static "js/bootstrap.min.js " %}"></script>
+    <script src="{% static "js/app.js " %}"></script>
+    <script src="{% static "js/amaps.js" %}"></script>
 </body>
+
 </html>

@@ -1,0 +1,22 @@
+.right {
+    float: right;
+}
+
+.info-tip {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    background-color: #fff;
+    height: 35px;
+    text-align: left;
+}
+
+.amaps #container {
+    height: 800px;
+}
+
+#messagecontainer {
+    height: 300px;
+    overflow: auto;
+}
