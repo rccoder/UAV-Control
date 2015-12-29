@@ -33,6 +33,7 @@ namespace MessageModel.network
                     Tuple<IPAddress, Packet> first = this.sending_queue.Dequeue();
                     IPAddress target_url = first.Item1;
                     Packet packet = first.Item2;
+                    //Console.WriteLine(Encoding.UTF8.GetString(packet.Payload));
                     send_to(target_url, packet);
                 }
                 else
@@ -48,11 +49,11 @@ namespace MessageModel.network
         public static void send_to(IPAddress target_url,Packet packet)
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            s.Bind(new IPEndPoint(target_url, 2333));
+            s.Connect(new IPEndPoint(target_url, 2333));
             s.Send(packet.to_bytes());
             s.Close();
             if (DEBUG)
-                Console.WriteLine("[LOG][{0}]: send a {1} packet which uuid is {2} to {3}",DateTime.Now.ToString(),packet.get_command_string(), Convert.ToString(packet.uuid, 16),target_url.ToString());
+                Console.WriteLine("[LOG][{0}]: send a {1} packet which uuid is {2} to {3}",DateTime.Now.ToString(),Encoding.UTF8.GetString(packet.get_command_string()),Encoding.UTF8.GetString(packet.Packet_uuid) ,target_url.ToString());
         }
 
     }

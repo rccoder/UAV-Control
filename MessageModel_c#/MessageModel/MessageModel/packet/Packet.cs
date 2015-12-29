@@ -80,13 +80,14 @@ namespace MessageModel.packet
             byte[] length = new byte[4];
             byte[] packet_uuid = new byte[16];
             byte[] checksum = new byte[8];
-            byte[] payload = new byte[bytes_array.Length-40];
+            
             Buffer.BlockCopy(bytes_array, 0, version, 0, 4);
             Buffer.BlockCopy(bytes_array, 4, command, 0, 8);
             Buffer.BlockCopy(bytes_array, 12, length, 0, 4);
             Buffer.BlockCopy(bytes_array, 16, packet_uuid, 0, 16);
             Buffer.BlockCopy(bytes_array, 32, checksum, 0, 8);
-            Buffer.BlockCopy(bytes_array, 40, payload, 0, bytes_array.Length - 40);
+            byte[] payload = new byte[Utils.bytes2int(length)];
+            Buffer.BlockCopy(bytes_array, 40, payload, 0, Utils.bytes2int(length));
             Packet p = new Packet(version,command,length,packet_uuid,checksum,payload);
             return p;
         }
@@ -96,7 +97,12 @@ namespace MessageModel.packet
             byte[] command = utils.Utils.gen_command_bytes_array(com);
             byte[] length = utils.Utils.int2bytes(payl.Length);
             byte[] packet_uuid = Guid.NewGuid().ToByteArray();
-            byte[] checksum = Encoding.UTF8.GetBytes(utils.HashHelper.Hash_SHA_256(Encoding.UTF8.GetString(payl)));
+            byte[] checksum_temp = Encoding.UTF8.GetBytes(utils.HashHelper.Hash_SHA_256(Encoding.UTF8.GetString(payl)));
+            byte[] checksum = new byte[8];
+            Buffer.BlockCopy(checksum_temp, 0, checksum, 0, 8);
+            Console.WriteLine(Encoding.UTF8.GetString(checksum));
+            Console.WriteLine(Encoding.UTF8.GetString(payl));
+            Console.WriteLine(payl.Length);
             Packet p = new Packet(version, command, length, packet_uuid, checksum, payl);
             return p;
         }

@@ -8,7 +8,7 @@ namespace MessageModel.config
 {
     public static class ROUTE_ADDRESS
     {
-        public const string route_address = "192.168.205.135";
+        public const string route_address = "192.168.199.150";
 
     }
 }

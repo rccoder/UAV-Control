@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\Desktop\NewtonJson\Newtonsoft.Json.dll</HintPath>
+      <HintPath>F:\VisualStudio2013\lib\NewtonJson\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,6 +54,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utils\HashHelper.cs" />
+    <Compile Include="utils\JsonDataObject.cs" />
+    <Compile Include="utils\JsonObject.cs" />
     <Compile Include="utils\utils.cs" />
     <Compile Include="worker.cs" />
   </ItemGroup>
