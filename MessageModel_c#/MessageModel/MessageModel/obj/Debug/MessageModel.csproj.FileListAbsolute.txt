@@ -1,0 +1,9 @@
+c:\users\lexus\documents\visual studio 2015\Projects\MessageModel\MessageModel\bin\Debug\MessageModel.exe.config
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\obj\Debug\MessageModel.csprojResolveAssemblyReference.cache
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\bin\Debug\MessageModel.exe
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\bin\Debug\MessageModel.pdb
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\obj\Debug\MessageModel.exe
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\obj\Debug\MessageModel.pdb
