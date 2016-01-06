@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^start', views.start),
     url(r'^stop', views.stop),
     url(r'^action', views.action),
+    url(r'^get_location', views.get_location),
 ]

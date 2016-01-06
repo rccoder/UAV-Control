@@ -26,3 +26,14 @@ def action(request):
         }
     }
     my_worker.send_data_packet(route_address, data_dict)
+
+
+def get_location(request):
+    data_dict = {
+        'command': 'get_plane_location',
+        'options': {
+            'state': 'all'
+        }
+    }
+    my_worker.send_data_packet(route_address, data_dict)
+
