@@ -19,7 +19,6 @@ namespace MessageModel.network
         public Queue<Tuple<IPAddress,Packet>> receiving_queue;
         bool threading_running = false;
         Socket s,conn,route;
-        IPAddress ip = IPAddress.Parse(MessageModel.config.ROUTE_ADDRESS.route_address);
 
         public Receiving_Controller(Queue<Tuple<IPAddress,Packet>>  queue)
         {
@@ -30,8 +29,9 @@ namespace MessageModel.network
 
         public void run()
         {
+            IPAddress this_com_ip = IPAddress.Parse("192.168.17.137");
             this.threading_running = true;
-            this.s.Bind(new IPEndPoint(ip, 2333));
+            this.s.Bind(new IPEndPoint(this_com_ip, 2333));
             this.s.Listen(5);
             while (this.threading_running)
             {
@@ -48,8 +48,22 @@ namespace MessageModel.network
                 //datastr += Encoding.ASCII.GetString(recvBytes, 0, bytes);
                 conn.Close();
                 Packet now_packet = Packet.from_bytes(data);
+
+                string Str = "";
+                for(int i=0;i<data.Length;i++)
+                {
+                    Str += data[i].ToString("X2");
+                }
+                //Console.WriteLine("Checksum is {0}",Str);
+                string Str1 = "";
+                for (int i = 0; i < now_packet.Checksum.Length; i++)
+                {
+                    Str1 += now_packet.Checksum[i].ToString("X2");
+                }
+                Console.WriteLine("Checksum is {0}", Str1);
+
                 this.receiving_queue.Enqueue(Tuple.Create<IPAddress,Packet>(route_address,now_packet));
-                Console.WriteLine("[LOG]{0}: receive a {1} packet which uuid is {2} from {3}", DateTime.Now.ToString(), now_packet.get_command_string(), Convert.ToString(now_packet.uuid,16), route_address.ToString());
+                Console.WriteLine("[LOG]{0}: receive a {1} packet which uuid is {2} from {3}", DateTime.Now.ToString(), Encoding.UTF8.GetString(now_packet.get_command_string()), Encoding.UTF8.GetString(now_packet.Packet_uuid), route_address.ToString());
             }
         }
 

@@ -13,6 +13,8 @@ namespace MessageModel.utils
 {
     public static class Utils
     {
+        private static byte[] _key1 = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+
         public static byte[] int2bytes(int number)
         {
             byte[] num_list = System.BitConverter.GetBytes(number);
@@ -75,43 +77,158 @@ namespace MessageModel.utils
             return key_hex;
         }
 
+        /*
         public static byte[] json_encrypt(string key_hex, byte[] json_string)
         {
-            //byte[] byteArray = System.Text.Encoding.Default.GetBytes(key_hex);
-            int length = json_string.Length;
-            int last_length = length + (16 - (length % 16));
-            byte[] encrypt = null;
-            encrypt = Encoding.UTF8.GetBytes(Encrypt(Encoding.UTF8.GetString(padding_by_zero(json_string, last_length)), key_hex));
-            return encrypt;
+            MemoryStream mStream = new MemoryStream();
+            RijndaelManaged aes = new RijndaelManaged();
+
+
+            aes.Mode = CipherMode.ECB;
+            aes.Padding = PaddingMode.PKCS7;
+            aes.KeySize = 128;
+            //aes.Key = _key; 
+            aes.Key = Encoding.UTF8.GetBytes(key_hex);
+            //aes.IV = _iV; 
+            CryptoStream cryptoStream = new CryptoStream(mStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
+            try
+            {
+                cryptoStream.Write(json_string, 0, json_string.Length);
+                cryptoStream.FlushFinalBlock();
+                return mStream.ToArray();
+            }
+            finally
+            {
+                cryptoStream.Close();
+                mStream.Close();
+                aes.Clear();
+            }
+            
         }
 
         public static byte[] json_decrypt(string key_hex, byte[] cipher_text)
         {
-            string decrypt = Decrypt(Encoding.UTF8.GetString(cipher_text), key_hex);
-            return cut_tail_zero(Encoding.UTF8.GetBytes(decrypt));
+            MemoryStream mStream = new MemoryStream(cipher_text);
+            //mStream.Write( encryptedBytes, 0, encryptedBytes.Length ); 
+            //mStream.Seek( 0, SeekOrigin.Begin ); 
+            RijndaelManaged aes = new RijndaelManaged();
+            aes.Mode = CipherMode.ECB;
+            aes.Padding = PaddingMode.PKCS7;
+            aes.KeySize = 128;
+            aes.Key = Encoding.UTF8.GetBytes(key_hex);
+            //aes.IV = _iV; 
+            CryptoStream cryptoStream = new CryptoStream(mStream, aes.CreateDecryptor(), CryptoStreamMode.Read);
+            try
+            {
+                byte[] tmp = new byte[cipher_text.Length + 32];
+                int len = cryptoStream.Read(tmp, 0, cipher_text.Length + 32);
+                byte[] ret = new byte[len];
+                Array.Copy(tmp, 0, ret, 0, len);
+                return ret;
+            }
+            finally
+            {
+                cryptoStream.Close();
+                mStream.Close();
+                aes.Clear();
+            }
+            
+        }*/
+        
+        public static byte[] json_encrypt(string key_hex, byte[] json_string)
+        {
+            /*
+            int length = json_string.Length;
+            int last_length = length + (16 - (length % 16));
+            byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key_hex);
+            byte[] toEncryptArray = padding_by_zero(json_string, last_length);
+
+            SymmetricAlgorithm des = Rijndael.Create();
+            byte[] inputByteArray = toEncryptArray;
+            des.Key = Encoding.UTF8.GetBytes(key_hex);
+            des.IV = _key1;
+            MemoryStream ms = new MemoryStream();
+            CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write);
+            cs.Write(inputByteArray, 0, inputByteArray.Length);
+            cs.FlushFinalBlock();
+            byte[] cipherBytes = ms.ToArray();//得到加密后的字节数组
+            cs.Close();
+            ms.Close();
+
+            string d = Convert.ToBase64String(cipherBytes);
+            string e = Base64StringToString(d);
+            byte[] result = Encoding.UTF8.GetBytes(e);
+            return result;
+            */
+            return json_string;
+            
         }
 
-
-        public static string Encrypt(string toEncrypt, string key)
+        public static byte[] json_decrypt(string key_hex, byte[] cipher_text_temp)
         {
-            byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key);
-            byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(toEncrypt);
+            /*
+            //string b = Encoding.UTF8.GetString(cipher_text_temp);
+            //string c = changebase64(b);
+            //byte[] cipher_text = Convert.FromBase64String(c);
+            //string b = Convert.ToBase64String(cipher_text_temp);
+            //byte[] cipher_text = Convert.FromBase64String(b);
+            //Console.WriteLine("aaaaaaaaaaa{0}", cipher_text.Length);
+            byte[] cipher_text = cipher_text_temp;
+            SymmetricAlgorithm des = Rijndael.Create();
+            des.Key = Encoding.UTF8.GetBytes(key_hex);
+            des.IV = _key1;
+            
+            byte[] decryptBytes = new byte[cipher_text.Length];
+            
+            MemoryStream ms = new MemoryStream(cipher_text);
+            CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Read);
+            cs.Read(decryptBytes, 0, decryptBytes.Length);
+            cs.Close();
+            ms.Close();
 
+            string d = Convert.ToBase64String(decryptBytes);
+            string e = Base64StringToString(d);
+            byte[] result = Encoding.UTF8.GetBytes(e);
+
+            return cut_tail_zero(decryptBytes);
+            */
+            return cipher_text_temp;
+
+
+        }
+        /*
+        public static byte[] json_encrypt(string key_hex, byte[] json_string_temp)
+        {
+            int length = json_string_temp.Length;
+            int last_length = length + (16 - (length % 16));
+            byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key_hex);
+            byte[] toEncryptArray = padding_by_zero(json_string_temp, last_length);
+
+            string b = Encoding.UTF8.GetString(toEncryptArray);
+            string c = changebase64(b);
+            byte[] json_string = Convert.FromBase64String(c);
+            
             RijndaelManaged rDel = new RijndaelManaged();
             rDel.Key = keyArray;
             rDel.Mode = CipherMode.ECB;
             rDel.Padding = PaddingMode.PKCS7;
 
             ICryptoTransform cTransform = rDel.CreateEncryptor();
-            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+            byte[] resultArray = cTransform.TransformFinalBlock(json_string, 0, json_string.Length);
 
-            return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+            string d = Convert.ToBase64String(resultArray);
+            string e = Base64StringToString(d);
+            byte[] result = Encoding.UTF8.GetBytes(e);
+            return result;
         }
 
-        public static string Decrypt(string toDecrypt, string key)
+        public static byte[] json_decrypt(string key_hex, byte[] cipher_text_temp)
         {
-            byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key);
-            byte[] toEncryptArray = Convert.FromBase64String(toDecrypt);
+            string b = Encoding.UTF8.GetString(cipher_text_temp);
+            string c = changebase64(b);
+            byte[] toEncryptArray = Convert.FromBase64String(c);
+
+            byte[] keyArray = Encoding.UTF8.GetBytes(key_hex);
 
             RijndaelManaged rDel = new RijndaelManaged();
             rDel.Key = keyArray;
@@ -121,8 +238,45 @@ namespace MessageModel.utils
             ICryptoTransform cTransform = rDel.CreateDecryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
 
-            return UTF8Encoding.UTF8.GetString(resultArray);
+            string d = Convert.ToBase64String(resultArray);
+            string e = Base64StringToString(d);
+            byte[] result = Encoding.UTF8.GetBytes(e);
+            return cut_tail_zero(result);
         }
+        */
+
+
+        public static string Base64StringToString(string base64)
+        {
+            if (base64 != "")
+            {
+                char[] charBuffer = base64.ToCharArray();
+                byte[] bytes = Convert.FromBase64CharArray(charBuffer, 0, charBuffer.Length);
+                string returnstr = Encoding.Default.GetString(bytes);
+                return returnstr;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public static string changebase64(string str)
+        {
+            if (str != "" && str != null)
+            {
+                byte[] b = Encoding.Default.GetBytes(str);
+                string returnstr = Convert.ToBase64String(b);
+                return returnstr;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+
+
     }
 }
 
