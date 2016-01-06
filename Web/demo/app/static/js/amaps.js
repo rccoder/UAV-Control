@@ -1,18 +1,12 @@
- var map = new AMap.Map('container', {
+var map = new AMap.Map('container', {
         resizeEnable: true,
-        center: [116.397428, 39.90923],
+        center: [126.640058, 45.849744],
         zoom: 13
-    });    
+    });
     map.clearMap();  // 清除地图覆盖物
     var markers = [{
         icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b1.png',
-        position: [116.205467, 39.907761]
-    }, {
-        icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b1.png',
-        position: [116.368904, 39.913423]
-    }, {
-        icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b1.png',
-        position: [116.305467, 39.807761]
+        position: [126.640058, 45.849744]
     }];
     // 添加一些分布不均的点到地图上,地图上添加三个点标记，作为参照
     markers.forEach(function(marker) {

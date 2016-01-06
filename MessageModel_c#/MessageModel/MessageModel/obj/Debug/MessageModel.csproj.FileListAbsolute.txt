@@ -7,3 +7,6 @@ C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\b
 C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\obj\Debug\MessageModel.exe
 C:\Users\Lexus\Documents\Visual Studio 2015\Projects\MessageModel\MessageModel\obj\Debug\MessageModel.pdb
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\UAV-Control\MessageModel_c#\MessageModel\MessageModel\bin\Debug\MessageModel.exe.config
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\UAV-Control\MessageModel_c#\MessageModel\MessageModel\obj\Debug\MessageModel.exe
+C:\Users\Lexus\Documents\Visual Studio 2015\Projects\UAV-Control\MessageModel_c#\MessageModel\MessageModel\obj\Debug\MessageModel.pdb

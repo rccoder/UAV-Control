@@ -52,12 +52,14 @@ def gen_aes_key_hex():
 
 
 def json_encrypt(key_hex, json_string):
-    obj = AES.new(key_hex.decode('hex'))
-    length = len(json_string)
-    last_length = length + (16 - (length % 16))
-    return obj.encrypt(padding_by_zero(json_string, last_length))
+    # obj = AES.new(key_hex.decode('hex'))
+    # length = len(json_string)
+    # last_length = length + (16 - (length % 16))
+    # return obj.encrypt(padding_by_zero(json_string, last_length))
+    return json_string
 
 
 def json_decrypt(key_hex, cipher_text):
-    obj = AES.new(key_hex.decode('hex'))
-    return cut_tail_zero(obj.decrypt(cipher_text))
+    # obj = AES.new(key_hex.decode('hex'))
+    # return cut_tail_zero(obj.decrypt(cipher_text))
+    return cipher_text

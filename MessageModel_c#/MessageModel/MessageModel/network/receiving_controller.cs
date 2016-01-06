@@ -29,7 +29,11 @@ namespace MessageModel.network
 
         public void run()
         {
+<<<<<<< HEAD
             IPAddress this_com_ip = IPAddress.Parse("192.168.17.137");
+=======
+            IPAddress this_com_ip = IPAddress.Parse("192.168.199.162");
+>>>>>>> 526373b248939e9fe25d5f126b7738def345df1f
             this.threading_running = true;
             this.s.Bind(new IPEndPoint(this_com_ip, 2333));
             this.s.Listen(5);

@@ -97,20 +97,12 @@ namespace MessageModel.packet
             byte[] command = utils.Utils.gen_command_bytes_array(com);
             byte[] length = utils.Utils.int2bytes(payl.Length);
             byte[] packet_uuid = Guid.NewGuid().ToByteArray();
+
             SHA256 sha256 = new SHA256CryptoServiceProvider();
             byte[] checksum_temp = sha256.ComputeHash(payl);
             byte[] checksum = new byte[8];
             Buffer.BlockCopy(checksum_temp, 0, checksum, 0, 8);
 
-            /*string Str1 = "";
-            for (int i = 0; i < checksum.Length; i++)
-            {
-                Str1 += checksum[i].ToString("X2");
-            }
-            Console.WriteLine("gen packet's Checksum is {0}", Str1);*/
-            //Console.WriteLine(Encoding.UTF8.GetString(checksum));
-            //Console.WriteLine(Encoding.UTF8.GetString(payl));
-            //Console.WriteLine(payl.Length);
             Packet p = new Packet(version, command, length, packet_uuid, checksum, payl);
             return p;
         }

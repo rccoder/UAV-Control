@@ -170,6 +170,7 @@ namespace MessageModel
             {
                 JsonDataObject decrypt_data = JsonConvert.DeserializeObject<JsonDataObject>(Encoding.UTF8.GetString(Utils.json_decrypt(SECRET_KEY.secret_key, now_packet.Payload)));
                 Console.WriteLine("to do functions");
+
                 Console.WriteLine(decrypt_data.command);
                 if(decrypt_data.command == "get_plane_number")
                 {
@@ -195,6 +196,7 @@ namespace MessageModel
                     IPAddress ip = IPAddress.Parse(ROUTE_ADDRESS.route_address);
                     send_data_packet(ip, js);
                 }
+
             }
         }
 
